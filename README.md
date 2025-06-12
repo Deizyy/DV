@@ -8,6 +8,7 @@
 # challenges
 - After the initial deployment of the code, the HTM page was not found after all the required links. Understanding why this happened and changing the BP 
 - Which cloud to use, and upload the project to the cloud
+- Initially the project was saved in a subfolder so the cloud was unable to upload it properly in sync with the git. I was able to figure it out after using the internet.
 
 # design descisions
 - first I'm thinking about mvc, But in this project it is not necessary and complicates it
