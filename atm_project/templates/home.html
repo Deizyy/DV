@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ATM</title>
+</head>
+<body>
+    <h1>ברוכים הבאים למערכת ה-ATM</h1>
+
+    <form id="actionForm">
+        <label>בחר חשבון:</label>
+        <select name="account_number" id="account_number">
+            {% for acc in accounts %}
+                <option value="{{ acc.account_number }}">{{ acc.account_number }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label>סכום (למשיכה/הפקדה):</label>
+        <input type="number" name="amount" id="amount" step="0.01">
+
+        <br><br>
+
+        <button type="button" onclick="performAction('balance')">הצגת יתרה</button>
+        <button type="button" onclick="performAction('deposit')">הפקדה</button>
+        <button type="button" onclick="performAction('withdraw')">משיכה</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function performAction(action) {
+            const accountNumber = document.getElementById('account_number').value;
+            const amount = document.getElementById('amount').value;
+            const resultDiv = document.getElementById('result');
+
+            if (action === 'balance') {
+                fetch(`/balance?account_number=${accountNumber}`)
+                    .then(res => res.text())
+                    .then(data => resultDiv.innerText = data);
+            } else {
+                const formData = new FormData();
+                formData.append('account_number', accountNumber);
+                formData.append('amount', amount);
+
+                fetch(`/${action}`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.text())
+                .then(data => resultDiv.innerText = data);
+            }
+        }
+    </script>
+</body>
+</html>
