@@ -3,10 +3,12 @@ from models import accounts, get_account_by_number
 
 home_bp = Blueprint('home', __name__)
 
+# connet to home page
 @home_bp.route('/', methods=['GET'])
 def home():
     return render_template('home.html', accounts=accounts)
 
+# get balance method
 @home_bp.route('/balance', methods=['GET'])
 def balance():
     account_number = request.args.get('account_number')
@@ -15,6 +17,7 @@ def balance():
         return f"יתרת חשבון {account.account_number}: {account.balance} ש\"ח"
     return "חשבון לא נמצא"
 
+# deposit method
 @home_bp.route('/deposit', methods=['POST'])
 def deposit():
     account_number = request.form.get('account_number')
@@ -25,6 +28,7 @@ def deposit():
         return f"הופקדו {amount} ש\"ח לחשבון {account.account_number}. יתרה חדשה: {account.balance}"
     return "חשבון לא נמצא"
 
+# withdrow method
 @home_bp.route('/withdraw', methods=['POST'])
 def withdraw():
     account_number = request.form.get('account_number')
